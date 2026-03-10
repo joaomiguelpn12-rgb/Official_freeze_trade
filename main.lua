@@ -115,14 +115,49 @@ watermark.TextTransparency = 0.8
 watermark.TextColor3 = Color3.new(1,1,1)
 
 -- FRAME QUE CONGELA A TELA
-local freezeScreen = Instance.new("Frame")
-freezeScreen.Parent = gui
-freezeScreen.Size = UDim2.new(1,0,1,0)
-freezeScreen.BackgroundColor3 = Color3.new(0,0,0)
-freezeScreen.BackgroundTransparency = 1
-freezeScreen.Visible = false
-freezeScreen.ZIndex = 999
+freeze.MouseButton1Click:Connect(function()
 
+	status.Text = "Congelando em 6s..."
+
+	task.wait(6)
+
+	-- BLUR NO JOGO
+	local blur = Instance.new("BlurEffect")
+	blur.Size = 40
+	blur.Parent = game.Lighting
+
+	-- TRAVAR CAMERA
+	local cam = workspace.CurrentCamera
+	cam.CameraType = Enum.CameraType.Scriptable
+
+	-- TELA PRETA
+	local freezeGui = Instance.new("ScreenGui")
+	freezeGui.Parent = game.CoreGui
+	freezeGui.IgnoreGuiInset = true
+	freezeGui.DisplayOrder = 999999
+
+	local freezeFrame = Instance.new("Frame")
+	freezeFrame.Parent = freezeGui
+	freezeFrame.Size = UDim2.new(1,0,1,0)
+	freezeFrame.Position = UDim2.new(0,0,0,0)
+	freezeFrame.BackgroundColor3 = Color3.new(0,0,0)
+	freezeFrame.BorderSizePixel = 0
+	freezeFrame.ZIndex = 999999
+
+	-- BLOQUEADOR DE INPUT
+	local blocker = Instance.new("TextButton")
+	blocker.Parent = freezeFrame
+	blocker.Size = UDim2.new(1,0,1,0)
+	blocker.BackgroundTransparency = 1
+	blocker.Text = ""
+	blocker.ZIndex = 1000000
+
+	status.Text = "Trade congelada!"
+
+	task.wait(2)
+	status.Text = ""
+
+end)
 -- FUNÇÕES BOTÕES
 freeze.MouseButton1Click:Connect(function()
 
